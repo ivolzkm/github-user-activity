@@ -7,7 +7,7 @@ class Cache{
     private int $ttl; //Time To Live em segundos
 
     //Define a configuração inicial do cache e garante que o diretório existe. 
-    public function __construct(string $cacheDir = '.chache', int $ttl = 300) {
+    public function __construct(string $cacheDir = '.cache', int $ttl = 300) {
         $this->cacheDir = $cacheDir;
         $this->ttl = $ttl;
 

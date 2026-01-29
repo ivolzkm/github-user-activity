@@ -21,7 +21,7 @@ O projeto foi desenvolvido focando em **Programação Orientada a Objetos (POO)*
 | :--- | :--- |
 | `github-activity.php` | Ponto de entrada (Entry point) e gestão de argumentos do terminal. |
 | `src/Cache.php` | Persistência local, hashing de chaves e lógica de expiração (TTL). |
-| `src/GitHubClient.php` | Comunicação HTTP via Streams e tratamento de erros da API. |
+| `src/GitHubClient.php` | Comunicação com a API do GitHub através do cliente HTTP Guzzle. |
 | `src/EventParser.php` | Tradução de JSON bruto para mensagens amigáveis em português/inglês. |
 
 ---
@@ -60,7 +60,7 @@ php github-activity.php octocat --type=PushEvent
 
 Este projeto demonstra o domínio de fundamentos essenciais para o desenvolvimento backend:
 * **I/O e File System:** Manipulação de metadados de arquivos (`filemtime`) para controle de cache.
-* **HTTP Nativo:** Configuração de requisições complexas e User-Agents usando `stream_context_create`.
+* **Cliente HTTP Abstrato:** Uso da biblioteca Guzzle para uma comunicação robusta e simplificada com a API REST do GitHub.
 * **PHP Moderno:** Implementação de tipagem estrita, `match expressions` e tratamento robusto de erros.
 * **Segurança CLI:** Sanitização de inputs e proteção contra Directory Traversal via hashing de arquivos de cache.
 

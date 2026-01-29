@@ -9,6 +9,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use App\GitHubClient;
 use App\EventParser;
+use App\Cache;
 
 // `$argv` é um array que contém os argumentos passados para o script.
 // O primeiro elemento (`$argv[0]`) é sempre o nome do script.
@@ -37,10 +38,26 @@ foreach ($args as $arg) {
     }
 }
 
-// Cria uma instância do cliente da API do GitHub.
-$client = new GitHubClient();
-// Busca a atividade do usuário.
-$activity = $client->getUserActivity($username);
+// Cria uma instância do Cache
+$cache = new Cache();
+// Define uma chave única para o cache baseado no nome de usuário.
+$cacheKey = "activity_{$username}";
+
+// Tenta obter a atividade do cache.
+$activity = $cache->get($cacheKey);
+
+// Se a atividade não estiver no cache ou o cache tiver expirado...
+if ($activity === null) {
+    echo "Buscando dados da API do GitHub...\n";
+    // Cria uma instância do cliente da API do GitHub.
+    $client = new GitHubClient();
+    // Busca a atividade do usuário.
+    $activity = $client->getUserActivity($username);
+    // Salva a nova atividade no cache.
+    $cache->set($cacheKey, $activity);
+} else {
+    echo "Dados carregados do cache.\n";
+}
 
 // Se um tipo de evento foi fornecido, filtra a atividade.
 if ($type) {
